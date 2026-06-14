@@ -1,0 +1,18 @@
+{
+  "name": "pdf-qa-agent",
+  "version": "1.0.0",
+  "description": "A beginner-friendly Node.js AI agent that answers questions from a PDF using retrieval augmented generation.",
+  "type": "module",
+  "scripts": {
+    "chat": "node src/index.js",
+    "check": "node --check src/index.js && node --check src/pdf.js && node --check src/chunk.js && node --check src/embeddings.js && node --check src/retriever.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "dotenv": "^16.4.7",
+    "pdf-parse": "^1.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
