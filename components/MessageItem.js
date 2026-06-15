@@ -22,14 +22,14 @@ export default function MessageItem({ message, index }) {
     <div className="animate-slide-up w-full">
 
       {/* ── Entry Number Badge + Query Stamp ───────────────────────────────── */}
-      <div className="flex items-start gap-3 mb-3">
+      <div className="flex items-start gap-2.5 sm:gap-3 mb-3">
         {/* Entry badge */}
         <div className="entry-badge mt-1 flex-shrink-0">
           {String(index + 1).padStart(2, '0')}
         </div>
 
         {/* Query Stamp — neumorphic inset */}
-        <div className="query-stamp flex-1 px-5 py-4">
+        <div className="query-stamp flex-1 px-4 py-3.5 sm:px-5 sm:py-4">
           <div className="flex items-center gap-2 mb-2">
             {/* Seal icon */}
             <div
@@ -70,7 +70,7 @@ export default function MessageItem({ message, index }) {
       </div>
 
       {/* ── Connector Line ──────────────────────────────────────────────────── */}
-      <div className="ml-[52px] mb-3 flex items-center gap-2">
+      <div className="ml-9 sm:ml-[52px] mb-3 flex items-center gap-2">
         <div style={{ width: '1px', height: '16px', backgroundColor: '#ab947e', opacity: 0.4 }} />
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
           <path
@@ -85,8 +85,8 @@ export default function MessageItem({ message, index }) {
       </div>
 
       {/* ── Response Scroll — neumorphic raised ─────────────────────────────── */}
-      <div className="ml-[52px]">
-        <div className="response-scroll px-6 py-5">
+      <div className="ml-9 sm:ml-[52px]">
+        <div className="response-scroll px-4 py-4 sm:px-6 sm:py-5">
 
           {/* Response header */}
           <div className="flex items-center justify-between mb-4">
@@ -179,7 +179,7 @@ export default function MessageItem({ message, index }) {
                     {/* Source content tooltip */}
                     {expandedSource === source.id && (
                       <div
-                        className="absolute bottom-full left-0 mb-2 p-3 rounded-xl z-10 w-72 text-xs leading-relaxed animate-slide-up"
+                        className="absolute bottom-full left-0 mb-2 p-3 rounded-xl z-10 w-72 max-w-[calc(100vw-80px)] text-xs leading-relaxed animate-slide-up"
                         style={{
                           backgroundColor: '#c3a995',
                           boxShadow: '6px 6px 14px #9a7a6a, -6px -6px 14px #d8c4b6',

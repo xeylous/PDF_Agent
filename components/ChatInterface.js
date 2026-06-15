@@ -26,6 +26,7 @@ export default function ChatInterface({ session }) {
   const [input, setInput]           = useState('');
   const [isLoading, setIsLoading]   = useState(false);
   const [inputRows, setInputRows]   = useState(1);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef       = useRef(null);
   const abortRef       = useRef(null);
@@ -143,13 +144,51 @@ export default function ChatInterface({ session }) {
 
   // ── Render ─────────────────────────────────────────────────────────────
   return (
-    <div className="flex h-full overflow-hidden" style={{ minHeight: 0 }}>
+    <div className="flex h-full overflow-hidden w-full relative" style={{ minHeight: 0 }}>
+      {/* Backdrop overlay for mobile drawer */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-[#3a2928]/40 z-40 lg:hidden transition-opacity duration-300"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* ══ Left Sidebar ══════════════════════════════════════════════════════ */}
       <aside
-        className="hidden lg:flex flex-col gap-4 p-4 flex-shrink-0"
-        style={{ width: '260px' }}
+        className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto flex flex-col gap-4 p-4 flex-shrink-0 transition-transform duration-300 ease-in-out h-full lg:h-auto
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          w-[270px] lg:w-[260px]`}
+        style={{
+          backgroundColor: '#c3a995',
+          boxShadow: isSidebarOpen 
+            ? '8px 0 24px rgba(89, 61, 59, 0.25)' 
+            : 'none',
+        }}
       >
+        {/* Mobile Header with Close button */}
+        <div className="flex items-center justify-between lg:hidden pb-3 mb-1 border-b" style={{ borderColor: 'rgba(154,122,106,0.2)' }}>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#593d3b' }}>
+            Document Panel
+          </span>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="flex items-center justify-center w-7 h-7 rounded-full transition-all"
+            style={{
+              backgroundColor: '#c3a995',
+              boxShadow: '2px 2px 4px #9a7a6a, -2px -2px 4px #d8c4b6',
+              color: '#593d3b',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'inset 1px 1px 3px #9a7a6a, inset -1px -1px 3px #d8c4b6'}
+            onMouseLeave={(e) => e.currentTarget.style.boxShadow = '2px 2px 4px #9a7a6a, -2px -2px 4px #d8c4b6'}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+
         {/* Document Card */}
         <div
           className="rounded-2xl p-4"
@@ -253,7 +292,10 @@ export default function ChatInterface({ session }) {
             {QUICK_PROMPTS.map((prompt) => (
               <button
                 key={prompt}
-                onClick={() => handleSubmit(prompt)}
+                onClick={() => {
+                  handleSubmit(prompt);
+                  setIsSidebarOpen(false); // close sidebar drawer on mobile
+                }}
                 disabled={isLoading}
                 className="text-left text-xs py-2 px-3 rounded-xl transition-all duration-150 disabled:opacity-40"
                 style={{
@@ -275,7 +317,42 @@ export default function ChatInterface({ session }) {
       </aside>
 
       {/* ══ Main Dossier Area ══════════════════════════════════════════════════ */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden w-full">
+        {/* Mobile Sub-Header (Only visible on screens < lg) */}
+        <div
+          className="lg:hidden flex items-center justify-between px-4 py-2.5 border-b flex-shrink-0"
+          style={{
+            backgroundColor: '#c3a995',
+            borderColor: 'rgba(154,122,106,0.25)',
+          }}
+        >
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold select-none"
+            style={{
+              backgroundColor: '#c3a995',
+              boxShadow: '3px 3px 6px #9a7a6a, -3px -3px 6px #d8c4b6',
+              color: '#593d3b',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'inset 2.5px 2.5px 5px #9a7a6a, inset -2.5px -2.5px 5px #d8c4b6'}
+            onMouseLeave={(e) => e.currentTarget.style.boxShadow = '3px 3px 6px #9a7a6a, -3px -3px 6px #d8c4b6'}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            Stats & Info
+          </button>
+
+          <span
+            className="text-xs font-medium truncate max-w-[170px]"
+            style={{ color: '#6f5e53' }}
+            title={session.filename}
+          >
+            {session.filename}
+          </span>
+        </div>
 
         {/* ── Message List ──────────────────────────────────────────────────── */}
         <div
@@ -299,14 +376,14 @@ export default function ChatInterface({ session }) {
 
         {/* ── Input Area — Inkwell ──────────────────────────────────────────── */}
         <div
-          className="flex-shrink-0 p-4"
+          className="flex-shrink-0 p-2.5 sm:p-4"
           style={{
             backgroundColor: '#c3a995',
             boxShadow: '0 -4px 16px rgba(154,122,106,0.25)',
           }}
         >
           <div
-            className="flex items-end gap-3 max-w-3xl mx-auto rounded-2xl p-3"
+            className="flex items-end gap-2.5 sm:gap-3 max-w-3xl mx-auto rounded-2xl p-2 sm:p-3"
             style={{
               backgroundColor: '#c3a995',
               boxShadow: '6px 6px 14px #9a7a6a, -6px -6px 14px #d8c4b6',
@@ -404,7 +481,7 @@ export default function ChatInterface({ session }) {
           </div>
 
           {/* Hint */}
-          <p className="text-center text-xs mt-2" style={{ color: '#ab947e' }}>
+          <p className="hidden sm:block text-center text-xs mt-2" style={{ color: '#ab947e' }}>
             Press <kbd
               className="px-1.5 py-0.5 rounded text-xs mx-0.5"
               style={{

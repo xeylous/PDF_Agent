@@ -8,23 +8,23 @@
 export default function Header({ session, onNewDocument }) {
   return (
     <header
-      className="w-full flex items-center justify-between px-6 py-4"
+      className="w-full flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4"
       style={{
         backgroundColor: '#593d3b',
         boxShadow: '0 4px 20px rgba(89, 61, 59, 0.4)',
       }}
     >
       {/* ── Brand ─────────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5 sm:gap-3">
         {/* Neumorphic icon container */}
         <div
-          className="flex items-center justify-center w-10 h-10 rounded-xl"
+          className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl"
           style={{
             backgroundColor: '#6f5e53',
             boxShadow: '3px 3px 6px #3a2928, -2px -2px 5px #7a6a5f',
           }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="sm:w-5 sm:h-5">
             <path
               d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
               stroke="#c3a995"
@@ -44,19 +44,19 @@ export default function Header({ session, onNewDocument }) {
 
         <div>
           <h1
-            className="text-lg font-semibold tracking-wide leading-none"
+            className="text-base sm:text-lg font-semibold tracking-wide leading-none"
             style={{ fontFamily: "'Playfair Display', serif", color: '#e5d4cb' }}
           >
             PDF Scholar
           </h1>
-          <p className="text-xs mt-0.5" style={{ color: '#9a7a6a' }}>
+          <p className="hidden sm:block text-xs mt-0.5" style={{ color: '#9a7a6a' }}>
             Document Intelligence
           </p>
         </div>
       </div>
 
       {/* ── Session Info + Action ─────────────────────────────────────────── */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2.5 sm:gap-4">
         {session && (
           <div
             className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg"
@@ -93,7 +93,7 @@ export default function Header({ session, onNewDocument }) {
         {session && (
           <button
             onClick={onNewDocument}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-150"
             style={{
               backgroundColor: '#6f5e53',
               color: '#c3a995',
@@ -122,7 +122,8 @@ export default function Header({ session, onNewDocument }) {
                 strokeLinecap="round"
               />
             </svg>
-            New Document
+            <span className="hidden sm:inline">New Document</span>
+            <span className="inline sm:hidden">New</span>
           </button>
         )}
 

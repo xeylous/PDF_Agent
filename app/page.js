@@ -57,8 +57,13 @@ export default function HomePage() {
   // ── Render ─────────────────────────────────────────────────────────────
   return (
     <div
-      className="flex flex-col"
-      style={{ height: '100vh', backgroundColor: '#c3a995', overflow: 'hidden' }}
+      className="flex flex-col w-full"
+      style={{
+        height: view === 'chat' ? '100vh' : 'auto',
+        minHeight: '100vh',
+        backgroundColor: '#c3a995',
+        overflow: view === 'chat' ? 'hidden' : 'auto',
+      }}
     >
       {/* ── App Header ─────────────────────────────────────────────────── */}
       <Header
@@ -67,15 +72,15 @@ export default function HomePage() {
       />
 
       {/* ── Main Content ───────────────────────────────────────────────── */}
-      <div className="flex-1 overflow-hidden">
+      <div className={`flex-1 ${view === 'chat' ? 'overflow-hidden' : 'overflow-y-auto'}`}>
 
         {/* Upload View */}
         {view === 'upload' && (
-          <div className="h-full flex flex-col items-center justify-center gap-8 px-4 py-8">
+          <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-6 sm:gap-8 px-4 py-6 sm:py-12">
             {/* Hero text */}
-            <div className="text-center max-w-xl">
+            <div className="text-center max-w-xl px-2">
               <h2
-                className="text-4xl font-semibold mb-3 leading-tight"
+                className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight"
                 style={{
                   fontFamily: "'Playfair Display', serif",
                   color: '#3a2928',
@@ -85,7 +90,7 @@ export default function HomePage() {
                 <br />
                 <span style={{ color: '#6f5e53' }}>with precision</span>
               </h2>
-              <p className="text-base" style={{ color: '#8a7968', lineHeight: 1.7 }}>
+              <p className="text-sm sm:text-base" style={{ color: '#8a7968', lineHeight: 1.7 }}>
                 Upload a document and ask questions in plain language.
                 Semantic search surfaces the most relevant excerpts,
                 Groq&apos;s LLM synthesizes a precise answer.
