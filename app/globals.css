@@ -1,0 +1,365 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
+:root {
+  /* Neumorphism palette */
+  --neu-base:      #c3a995;
+  --neu-light:     #d8c4b6;
+  --neu-lighter:   #e5d4cb;
+  --neu-dark:      #9a7a6a;
+  --neu-darker:    #7a5e52;
+  --espresso:      #593d3b;
+  --olive:         #8a7968;
+  --mid-brown:     #6f5e53;
+  --mid-tan:       #ab947e;
+  --white:         #ffffff;
+
+  /* Neumorphic shadow tokens */
+  --shadow-raised:     8px  8px  16px #9a7a6a, -8px  -8px  16px #d8c4b6;
+  --shadow-raised-sm:  4px  4px   8px #9a7a6a, -4px  -4px   8px #d8c4b6;
+  --shadow-raised-xs:  2px  2px   4px #9a7a6a, -2px  -2px   4px #d8c4b6;
+  --shadow-inset:      inset 6px  6px  12px #9a7a6a, inset -6px  -6px  12px #d8c4b6;
+  --shadow-inset-sm:   inset 3px  3px   6px #9a7a6a, inset -3px  -3px   6px #d8c4b6;
+  --shadow-inset-xs:   inset 2px  2px   4px #9a7a6a, inset -2px  -2px   4px #d8c4b6;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Inter', system-ui, sans-serif;
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--neu-base);
+  color: var(--espresso);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar Styling ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--neu-base);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--neu-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mid-brown);
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────────── */
+::selection {
+  background: var(--mid-tan);
+  color: var(--espresso);
+}
+
+/* ─── Neumorphic Utility Classes ─────────────────────────────────────────────── */
+
+/* Raised element (appears to float above the surface) */
+.neu-raised {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-raised);
+  border-radius: 16px;
+}
+
+.neu-raised-sm {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-raised-sm);
+  border-radius: 12px;
+}
+
+/* Inset element (appears to be pressed into the surface) */
+.neu-inset {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-inset);
+  border-radius: 16px;
+}
+
+.neu-inset-sm {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-inset-sm);
+  border-radius: 12px;
+}
+
+/* Interactive states */
+.neu-button {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-raised-sm);
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.neu-button:hover {
+  box-shadow: 6px 6px 12px #9a7a6a, -6px -6px 12px #d8c4b6;
+  transform: translateY(-1px);
+}
+
+.neu-button:active {
+  box-shadow: var(--shadow-inset-sm);
+  transform: translateY(0);
+}
+
+.neu-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── Prose / Markdown Rendering ─────────────────────────────────────────────── */
+
+.prose-scholar {
+  color: var(--espresso);
+  font-family: var(--font-sans);
+  font-size: 0.938rem;
+  line-height: 1.75;
+}
+
+.prose-scholar p {
+  margin-bottom: 0.75em;
+}
+
+.prose-scholar p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-scholar strong {
+  font-weight: 600;
+  color: var(--mid-brown);
+}
+
+.prose-scholar em {
+  font-style: italic;
+  color: var(--neu-dark);
+}
+
+.prose-scholar ul,
+.prose-scholar ol {
+  padding-left: 1.25em;
+  margin-bottom: 0.75em;
+}
+
+.prose-scholar li {
+  margin-bottom: 0.3em;
+}
+
+.prose-scholar code {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 0.85em;
+  background: var(--neu-light);
+  border-radius: 4px;
+  padding: 1px 5px;
+  box-shadow: var(--shadow-inset-xs);
+}
+
+.prose-scholar blockquote {
+  border-left: 3px solid var(--mid-tan);
+  padding-left: 1em;
+  color: var(--mid-brown);
+  font-style: italic;
+  margin: 0.75em 0;
+}
+
+/* ─── Ink Cursor (streaming typewriter effect) ───────────────────────────────── */
+.ink-cursor::after {
+  content: '|';
+  color: var(--espresso);
+  margin-left: 1px;
+  animation: cursor-blink 1s ease-in-out infinite;
+  font-weight: 300;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── Ink Drop Thinking Indicator ────────────────────────────────────────────── */
+.ink-drop-dot {
+  width:  10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mid-tan);
+  display: inline-block;
+  box-shadow: var(--shadow-raised-xs);
+}
+
+/* ─── Upload Zone States ─────────────────────────────────────────────────────── */
+.upload-zone-idle {
+  box-shadow: var(--shadow-inset);
+}
+
+.upload-zone-active {
+  box-shadow: inset 8px 8px 20px #9a7a6a, inset -8px -8px 20px #d8c4b6;
+}
+
+/* ─── Source Chip ─────────────────────────────────────────────────────────────── */
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  background: var(--neu-base);
+  box-shadow: var(--shadow-raised-xs);
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mid-brown);
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+
+.source-chip:hover {
+  box-shadow: var(--shadow-inset-xs);
+  color: var(--espresso);
+}
+
+/* ─── Query Stamp ─────────────────────────────────────────────────────────────── */
+.query-stamp {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-inset-sm);
+  border-radius: 12px;
+  animation: stamp-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes stamp-in {
+  0%   { transform: scale(1.04) rotate(-0.5deg); opacity: 0; }
+  60%  { transform: scale(0.98) rotate(0.2deg);  opacity: 1; }
+  100% { transform: scale(1)    rotate(0deg);    opacity: 1; }
+}
+
+/* ─── Response Scroll ─────────────────────────────────────────────────────────── */
+.response-scroll {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-raised);
+  border-radius: 16px;
+  animation: unfurl 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top center;
+}
+
+@keyframes unfurl {
+  0%   { transform: scaleY(0.88); opacity: 0; }
+  100% { transform: scaleY(1);    opacity: 1; }
+}
+
+/* ─── Entry Number Badge ─────────────────────────────────────────────────────── */
+.entry-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:  28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--neu-base);
+  box-shadow: var(--shadow-raised-xs);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--mid-brown);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* ─── Progress Ring ──────────────────────────────────────────────────────────── */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  stroke: var(--mid-tan);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+  fill: none;
+}
+
+/* ─── Divider ─────────────────────────────────────────────────────────────────── */
+.entry-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--neu-dark) 20%,
+    var(--neu-dark) 80%,
+    transparent
+  );
+  opacity: 0.3;
+}
+
+/* ─── Input Area ──────────────────────────────────────────────────────────────── */
+.chat-input {
+  background: var(--neu-base);
+  box-shadow: var(--shadow-inset-sm);
+  border: none;
+  border-radius: 12px;
+  color: var(--espresso);
+  font-family: var(--font-sans);
+  font-size: 0.938rem;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+  resize: none;
+  width: 100%;
+  padding: 14px 16px;
+  line-height: 1.5;
+}
+
+.chat-input::placeholder {
+  color: var(--olive);
+  font-style: italic;
+}
+
+.chat-input:focus {
+  box-shadow: inset 4px 4px 8px #9a7a6a, inset -4px -4px 8px #d8c4b6;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────────── */
+@keyframes slide-up {
+  0%   { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes source-fade {
+  0%   { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0);   }
+}
+
+.animate-source-fade {
+  animation: source-fade 0.4s ease-out;
+}
+
+@keyframes ink-pulse {
+  0%, 100% { box-shadow: 2px 2px 4px #9a7a6a, -2px -2px 4px #d8c4b6; }
+  50%       { box-shadow: 4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6; }
+}
+
+.animate-ink-pulse {
+  animation: ink-pulse 1.5s ease-in-out infinite;
+}

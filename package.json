@@ -1,16 +1,34 @@
 {
-  "name": "pdf-qa-agent",
-  "version": "1.0.0",
-  "description": "A beginner-friendly Node.js AI agent that answers questions from a PDF using retrieval augmented generation.",
+  "name": "pdf-scholar",
+  "version": "2.0.0",
+  "private": true,
   "type": "module",
+  "description": "AI-powered PDF Q&A Agent — full-stack Next.js with RAG, Groq, Gemini embeddings, and Neon DB",
   "scripts": {
-    "chat": "node src/index.js",
-    "check": "node --check src/index.js && node --check src/pdf.js && node --check src/chunk.js && node --check src/embeddings.js && node --check src/retriever.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:setup": "node --env-file=.env.local scripts/setup-db.js"
   },
   "dependencies": {
     "@google/genai": "^1.0.0",
+    "@neondatabase/serverless": "^0.9.5",
     "dotenv": "^16.4.7",
-    "pdf-parse": "^1.1.1"
+    "groq-sdk": "^0.9.1",
+    "next": "^15.3.3",
+    "pdf-parse": "^1.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^9.1.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15.3.3",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
   },
   "engines": {
     "node": ">=18"
