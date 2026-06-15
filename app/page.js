@@ -46,12 +46,26 @@ export default function HomePage() {
   };
 
   // ── Handle "New Document" ──────────────────────────────────────────────
-  const handleNewDocument = () => {
+  const handleNewDocument = async () => {
+    const currentSessionId = session?.sessionId;
+
+    // Reset local states immediately for instant UI feedback
     setSession(null);
     setView('upload');
     try {
       sessionStorage.removeItem('pdfScholar.session');
     } catch {}
+
+    // Clean up database records (embeddings and vectors) in background
+    if (currentSessionId) {
+      try {
+        await fetch(`/api/session?sessionId=${currentSessionId}`, {
+          method: 'DELETE',
+        });
+      } catch (err) {
+        console.error('Failed to clear database session:', err);
+      }
+    }
   };
 
   // ── Render ─────────────────────────────────────────────────────────────
