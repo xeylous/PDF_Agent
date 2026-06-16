@@ -106,17 +106,25 @@ export default function UploadZone({ onSuccess }) {
 
       {/* ── Main Upload Vessel ─────────────────────────────────────────────── */}
       <div
-        className="w-full rounded-3xl p-1"
-        style={{ boxShadow: '8px 8px 20px #9a7a6a, -8px -8px 20px #d8c4b6' }}
+        className="w-full sketch-border p-1.5"
+        style={{
+          borderColor: '#3e2826',
+          boxShadow: '6px 6px 16px rgba(111, 94, 83, 0.15), -6px -6px 16px #ffffff',
+          backgroundColor: '#3e2826', // dark leather cover base
+        }}
       >
         <div
-          className="w-full rounded-3xl p-8 flex flex-col items-center justify-center gap-6 cursor-pointer transition-all duration-300"
+          className="w-full flex flex-col items-center justify-center gap-6 cursor-pointer transition-all duration-300 sketch-border-alt"
           style={{
-            backgroundColor: '#c3a995',
+            backgroundColor: 'rgba(252, 247, 242, 0.72)', // warm parchment overlay
+            backdropFilter: 'blur(10px)',
+            borderColor: '#ab947e',
             boxShadow: state === 'dragging'
-              ? 'inset 10px 10px 24px #9a7a6a, inset -10px -10px 24px #d8c4b6'
-              : 'inset 6px 6px 14px #9a7a6a, inset -6px -6px 14px #d8c4b6',
+              ? 'inset 6px 6px 16px rgba(111, 94, 83, 0.2), inset -6px -6px 16px #ffffff'
+              : 'inset 3px 3px 10px rgba(111, 94, 83, 0.1), inset -3px -3px 10px #ffffff',
             minHeight: '320px',
+            borderRadius: '20px 8px 22px 10px / 8px 22px 10px 20px',
+            padding: '2.5rem 1.5rem',
           }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -159,7 +167,7 @@ export default function UploadZone({ onSuccess }) {
 
       {/* ── Supported formats note ──────────────────────────────────────────── */}
       {state === 'idle' && (
-        <p className="mt-4 text-xs text-center" style={{ color: '#8a7968' }}>
+        <p className="mt-4 text-xs text-center font-medium" style={{ color: '#8a7968' }}>
           Supports PDF with selectable text · Max 50 MB · Embeddings cached per document
         </p>
       )}
@@ -172,35 +180,37 @@ export default function UploadZone({ onSuccess }) {
 function IdleDisplay({ isDragging }) {
   return (
     <>
-      {/* Document icon — raised neumorphic */}
+      {/* Document icon — wobbly sketchy glass */}
       <div
-        className="flex items-center justify-center w-20 h-20 rounded-2xl transition-all duration-300"
+        className="flex items-center justify-center w-20 h-20 sketch-border-sm transition-all duration-300"
         style={{
-          backgroundColor: '#c3a995',
+          backgroundColor: isDragging ? 'rgba(171, 148, 126, 0.2)' : 'rgba(252, 247, 242, 0.85)',
+          backdropFilter: 'blur(4px)',
+          borderColor: '#6f5e53',
           boxShadow: isDragging
-            ? 'inset 4px 4px 8px #9a7a6a, inset -4px -4px 8px #d8c4b6'
-            : '6px 6px 14px #9a7a6a, -6px -6px 14px #d8c4b6',
-          transform: isDragging ? 'scale(0.96)' : 'scale(1)',
+            ? 'inset 3px 3px 6px rgba(111, 94, 83, 0.2), inset -3px -3px 6px #ffffff'
+            : '4px 4px 10px rgba(111, 94, 83, 0.15), -4px -4px 10px #ffffff',
+          transform: isDragging ? 'scale(0.95)' : 'scale(1)',
         }}
       >
         <svg
-          width="36"
-          height="36"
+          width="34"
+          height="34"
           viewBox="0 0 24 24"
           fill="none"
-          style={{ opacity: isDragging ? 0.6 : 1, transition: 'opacity 0.2s' }}
+          style={{ opacity: isDragging ? 0.65 : 1, transition: 'opacity 0.2s' }}
         >
           <path
             d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
-            stroke="#6f5e53"
-            strokeWidth="1.5"
+            stroke="#3e2826"
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M14 2v6h6M12 18v-6M9 15l3-3 3 3"
-            stroke="#6f5e53"
-            strokeWidth="1.5"
+            stroke="#3e2826"
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -208,14 +218,14 @@ function IdleDisplay({ isDragging }) {
       </div>
 
       {/* Text */}
-      <div className="text-center">
+      <div className="text-center select-none">
         <p
-          className="text-xl font-semibold mb-2"
-          style={{ fontFamily: "'Playfair Display', serif", color: '#593d3b' }}
+          className="text-xl font-bold mb-1.5"
+          style={{ fontFamily: "'Playfair Display', serif", color: '#3e2826' }}
         >
           {isDragging ? 'Release to upload' : 'Drop your document'}
         </p>
-        <p className="text-sm" style={{ color: '#8a7968' }}>
+        <p className="text-sm font-medium" style={{ color: '#8a7968' }}>
           {isDragging ? 'Let it go…' : 'or click to browse files'}
         </p>
       </div>
@@ -223,11 +233,18 @@ function IdleDisplay({ isDragging }) {
       {/* Browse button */}
       {!isDragging && (
         <div
-          className="px-6 py-2.5 rounded-xl text-sm font-medium"
+          className="px-6 py-2.5 sketch-border-sm text-sm font-semibold transition-all duration-150 select-none"
           style={{
-            color: '#593d3b',
-            boxShadow: '4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6',
-            backgroundColor: '#c3a995',
+            color: '#3e2826',
+            borderColor: '#6f5e53',
+            boxShadow: '3px 3px 8px rgba(111, 94, 83, 0.12), -3px -3px 8px #ffffff',
+            backgroundColor: 'rgba(252, 247, 242, 0.9)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = 'inset 2px 2px 5px rgba(111, 94, 83, 0.15), inset -2px -2px 5px #ffffff';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = '3px 3px 8px rgba(111, 94, 83, 0.12), -3px -3px 8px #ffffff';
           }}
         >
           Browse PDF
@@ -240,12 +257,12 @@ function IdleDisplay({ isDragging }) {
           {['Groq LLM', 'Gemini Embeddings', 'pgvector Search'].map((tag) => (
             <span
               key={tag}
-              className="text-xs px-3 py-1 rounded-full"
+              className="text-xs px-3 py-1 sketch-border-sm font-medium select-none"
               style={{
                 color: '#8a7968',
-                backgroundColor: '#c3a995',
-                boxShadow: 'inset 2px 2px 4px #9a7a6a, inset -2px -2px 4px #d8c4b6',
-                fontWeight: 500,
+                borderColor: 'rgba(111, 94, 83, 0.35)',
+                backgroundColor: 'rgba(252, 247, 242, 0.65)',
+                boxShadow: 'inset 1px 1px 3px rgba(111, 94, 83, 0.1), inset -1px -1px 3px #ffffff',
               }}
             >
               {tag}
@@ -339,39 +356,52 @@ function ErrorDisplay({ message, onRetry }) {
     <>
       {/* Error icon */}
       <div
-        className="flex items-center justify-center w-16 h-16 rounded-2xl"
+        className="flex items-center justify-center w-16 h-16 sketch-border-sm"
         style={{
-          backgroundColor: '#c3a995',
-          boxShadow: 'inset 4px 4px 8px #9a7a6a, inset -4px -4px 8px #d8c4b6',
+          backgroundColor: 'rgba(139, 58, 58, 0.12)',
+          borderColor: '#8b3a3a',
+          boxShadow: 'inset 3px 3px 6px rgba(111, 94, 83, 0.1), inset -3px -3px 6px #ffffff',
         }}
       >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
           <path
             d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-            stroke="#7a5e52"
-            strokeWidth="1.5"
+            stroke="#8b3a3a"
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
       </div>
 
-      <div className="text-center">
+      <div className="text-center select-none">
         <p
-          className="text-base font-semibold mb-1"
-          style={{ color: '#593d3b', fontFamily: "'Playfair Display', serif" }}
+          className="text-base font-bold mb-1.5"
+          style={{ color: '#8b3a3a', fontFamily: "'Playfair Display', serif" }}
         >
           Upload Failed
         </p>
-        <p className="text-sm max-w-xs" style={{ color: '#8a7968' }}>
+        <p className="text-sm max-w-xs font-medium" style={{ color: '#8a7968' }}>
           {message}
         </p>
       </div>
 
       <button
         onClick={(e) => { e.stopPropagation(); onRetry(); }}
-        className="px-6 py-2.5 rounded-xl text-sm font-medium neu-button"
-        style={{ color: '#593d3b' }}
+        className="px-6 py-2.5 sketch-border-sm text-sm font-semibold transition-all duration-150"
+        style={{
+          color: '#8b3a3a',
+          borderColor: '#8b3a3a',
+          backgroundColor: 'rgba(252, 247, 242, 0.9)',
+          boxShadow: '3px 3px 8px rgba(139, 58, 58, 0.12), -3px -3px 8px #ffffff',
+          cursor: 'pointer',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.boxShadow = 'inset 2.5px 2.5px 5px rgba(139, 58, 58, 0.15), inset -2.5px -2.5px 5px #ffffff';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.boxShadow = '3px 3px 8px rgba(139, 58, 58, 0.12), -3px -3px 8px #ffffff';
+        }}
       >
         Try Again
       </button>

@@ -155,33 +155,33 @@ export default function ChatInterface({ session }) {
 
       {/* ══ Left Sidebar ══════════════════════════════════════════════════════ */}
       <aside
-        className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto flex flex-col gap-4 p-4 flex-shrink-0 transition-transform duration-300 ease-in-out h-full lg:h-auto
+        className={`fixed lg:relative inset-y-0 left-0 z-50 lg:z-auto flex flex-col gap-4 p-4 flex-shrink-0 transition-transform duration-300 ease-in-out h-full lg:h-auto sketch-border-alt
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-          w-[270px] lg:w-[260px]`}
+          w-[275px] lg:w-[265px]`}
         style={{
-          backgroundColor: '#c3a995',
+          backgroundColor: 'rgba(252, 247, 242, 0.85)', // warm paper glass
+          backdropFilter: 'blur(16px)',
+          borderColor: '#ab947e',
           boxShadow: isSidebarOpen 
-            ? '8px 0 24px rgba(89, 61, 59, 0.25)' 
-            : 'none',
+            ? '8px 0 24px rgba(111, 94, 83, 0.15)' 
+            : '4px 4px 10px rgba(111, 94, 83, 0.05), -4px -4px 10px #ffffff',
         }}
       >
         {/* Mobile Header with Close button */}
         <div className="flex items-center justify-between lg:hidden pb-3 mb-1 border-b" style={{ borderColor: 'rgba(154,122,106,0.2)' }}>
-          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#593d3b' }}>
+          <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#3e2826' }}>
             Document Panel
           </span>
           <button
             onClick={() => setIsSidebarOpen(false)}
             className="flex items-center justify-center w-7 h-7 rounded-full transition-all"
             style={{
-              backgroundColor: '#c3a995',
-              boxShadow: '2px 2px 4px #9a7a6a, -2px -2px 4px #d8c4b6',
-              color: '#593d3b',
+              backgroundColor: 'rgba(252, 247, 242, 0.9)',
+              boxShadow: '2px 2px 4px rgba(111, 94, 83, 0.1), -2px -2px 4px #ffffff',
+              color: '#3e2826',
               border: 'none',
               cursor: 'pointer',
             }}
-            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'inset 1px 1px 3px #9a7a6a, inset -1px -1px 3px #d8c4b6'}
-            onMouseLeave={(e) => e.currentTarget.style.boxShadow = '2px 2px 4px #9a7a6a, -2px -2px 4px #d8c4b6'}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
               <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -191,18 +191,19 @@ export default function ChatInterface({ session }) {
 
         {/* Document Card */}
         <div
-          className="rounded-2xl p-4"
+          className="p-4 sketch-border-sm"
           style={{
-            backgroundColor: '#c3a995',
-            boxShadow: '6px 6px 12px #9a7a6a, -6px -6px 12px #d8c4b6',
+            backgroundColor: 'rgba(252, 247, 242, 0.65)',
+            borderColor: 'rgba(171, 148, 126, 0.4)',
+            boxShadow: 'inset 2px 2px 5px rgba(111, 94, 83, 0.1), inset -2px -2px 5px #ffffff',
           }}
         >
           <div className="flex items-center gap-2 mb-3">
             <div
-              className="flex items-center justify-center w-8 h-8 rounded-xl"
+              className="flex items-center justify-center w-8 h-8 sketch-border-sm"
               style={{
-                backgroundColor: '#c3a995',
-                boxShadow: 'inset 2px 2px 5px #9a7a6a, inset -2px -2px 5px #d8c4b6',
+                backgroundColor: 'rgba(252, 247, 242, 0.85)',
+                borderColor: '#ab947e',
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -216,7 +217,7 @@ export default function ChatInterface({ session }) {
               </svg>
             </div>
             <span
-              className="text-xs font-semibold uppercase tracking-wider"
+              className="text-xs font-bold uppercase tracking-wider"
               style={{ color: '#8a7968' }}
             >
               Active Document
@@ -224,14 +225,14 @@ export default function ChatInterface({ session }) {
           </div>
 
           <p
-            className="text-sm font-medium mb-3 leading-snug break-all"
-            style={{ fontFamily: "'Playfair Display', serif", color: '#3a2928' }}
+            className="text-sm font-semibold mb-3 leading-snug break-all"
+            style={{ fontFamily: "'Playfair Display', serif", color: '#3e2826' }}
           >
             {session.filename}
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-3 gap-1.5">
             {[
               { label: 'Pages',   value: session.pages      },
               { label: 'Chunks',  value: session.chunkCount },
@@ -239,16 +240,17 @@ export default function ChatInterface({ session }) {
             ].map(({ label, value }) => (
               <div
                 key={label}
-                className="rounded-xl p-2.5 text-center"
+                className="p-1.5 text-center sketch-border-sm"
                 style={{
-                  backgroundColor: '#c3a995',
-                  boxShadow: 'inset 2px 2px 4px #9a7a6a, inset -2px -2px 4px #d8c4b6',
+                  backgroundColor: 'rgba(252, 247, 242, 0.85)',
+                  borderColor: 'rgba(111, 94, 83, 0.25)',
+                  boxShadow: '1px 1px 3px rgba(111, 94, 83, 0.05)',
                 }}
               >
-                <p className="text-lg font-semibold" style={{ color: '#593d3b' }}>
+                <p className="text-sm font-bold" style={{ color: '#3e2826' }}>
                   {value ?? '—'}
                 </p>
-                <p className="text-xs" style={{ color: '#8a7968' }}>
+                <p className="text-[10px] font-medium" style={{ color: '#8a7968' }}>
                   {label}
                 </p>
               </div>
@@ -258,16 +260,16 @@ export default function ChatInterface({ session }) {
           {/* Cached badge */}
           {session.cached && (
             <div
-              className="mt-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg"
+              className="mt-3 flex items-center gap-1.5 px-2 py-1 rounded-lg"
               style={{
-                backgroundColor: '#c3a995',
-                boxShadow: 'inset 1px 1px 3px #9a7a6a, inset -1px -1px 3px #d8c4b6',
+                backgroundColor: 'rgba(252, 247, 242, 0.4)',
+                border: '1px solid rgba(171, 148, 126, 0.2)',
               }}
             >
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#8a7968" strokeWidth="2" strokeLinecap="round" />
               </svg>
-              <span className="text-xs" style={{ color: '#8a7968' }}>
+              <span className="text-[11px] font-medium" style={{ color: '#8a7968' }}>
                 Embeddings cached
               </span>
             </div>
@@ -276,19 +278,21 @@ export default function ChatInterface({ session }) {
 
         {/* Quick Prompts */}
         <div
-          className="rounded-2xl p-4"
+          className="p-4 sketch-border-sm flex-1 flex flex-col gap-2"
           style={{
-            backgroundColor: '#c3a995',
-            boxShadow: '6px 6px 12px #9a7a6a, -6px -6px 12px #d8c4b6',
+            backgroundColor: 'rgba(252, 247, 242, 0.65)',
+            borderColor: 'rgba(171, 148, 126, 0.4)',
+            boxShadow: 'inset 2px 2px 5px rgba(111, 94, 83, 0.1), inset -2px -2px 5px #ffffff',
+            minHeight: '220px',
           }}
         >
           <p
-            className="text-xs font-semibold uppercase tracking-wider mb-3"
+            className="text-xs font-bold uppercase tracking-wider mb-1"
             style={{ color: '#8a7968' }}
           >
             Quick Queries
           </p>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 overflow-y-auto pr-1 flex-1">
             {QUICK_PROMPTS.map((prompt) => (
               <button
                 key={prompt}
@@ -297,17 +301,17 @@ export default function ChatInterface({ session }) {
                   setIsSidebarOpen(false); // close sidebar drawer on mobile
                 }}
                 disabled={isLoading}
-                className="text-left text-xs py-2 px-3 rounded-xl transition-all duration-150 disabled:opacity-40"
+                className="text-left text-[11px] leading-tight py-2 px-2.5 sketch-border-sm transition-all duration-150 disabled:opacity-40 select-none"
                 style={{
-                  backgroundColor: '#c3a995',
-                  boxShadow: '3px 3px 6px #9a7a6a, -3px -3px 6px #d8c4b6',
-                  color: '#593d3b',
-                  border: 'none',
+                  backgroundColor: 'rgba(252, 247, 242, 0.85)',
+                  borderColor: '#ab947e',
+                  boxShadow: '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff',
+                  color: '#3e2826',
                   cursor: isLoading ? 'not-allowed' : 'pointer',
                   fontFamily: "'Inter', sans-serif",
                 }}
-                onMouseEnter={(e) => !isLoading && (e.currentTarget.style.boxShadow = 'inset 2px 2px 4px #9a7a6a, inset -2px -2px 4px #d8c4b6')}
-                onMouseLeave={(e) => (e.currentTarget.style.boxShadow = '3px 3px 6px #9a7a6a, -3px -3px 6px #d8c4b6')}
+                onMouseEnter={(e) => !isLoading && (e.currentTarget.style.boxShadow = 'inset 1.5px 1.5px 3px rgba(111, 94, 83, 0.1), inset -1.5px -1.5px 3px #ffffff')}
+                onMouseLeave={(e) => (e.currentTarget.style.boxShadow = '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff')}
               >
                 {prompt}
               </button>
@@ -322,31 +326,29 @@ export default function ChatInterface({ session }) {
         <div
           className="lg:hidden flex items-center justify-between px-4 py-2.5 border-b flex-shrink-0"
           style={{
-            backgroundColor: '#c3a995',
-            borderColor: 'rgba(154,122,106,0.25)',
+            backgroundColor: 'rgba(252, 247, 242, 0.72)', // warm paper glass
+            backdropFilter: 'blur(10px)',
+            borderColor: 'rgba(111, 94, 83, 0.25)',
           }}
         >
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold select-none"
+            className="flex items-center gap-1.5 px-3 py-1.5 sketch-border-sm text-xs font-semibold select-none"
             style={{
-              backgroundColor: '#c3a995',
-              boxShadow: '3px 3px 6px #9a7a6a, -3px -3px 6px #d8c4b6',
-              color: '#593d3b',
-              border: 'none',
+              backgroundColor: 'rgba(252, 247, 242, 0.9)',
+              boxShadow: '2px 2px 5px rgba(111, 94, 83, 0.1), -2px -2px 5px #ffffff',
+              color: '#3e2826',
               cursor: 'pointer',
             }}
-            onMouseEnter={(e) => e.currentTarget.style.boxShadow = 'inset 2.5px 2.5px 5px #9a7a6a, inset -2.5px -2.5px 5px #d8c4b6'}
-            onMouseLeave={(e) => e.currentTarget.style.boxShadow = '3px 3px 6px #9a7a6a, -3px -3px 6px #d8c4b6'}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
             </svg>
             Stats & Info
           </button>
 
           <span
-            className="text-xs font-medium truncate max-w-[170px]"
+            className="text-xs font-semibold truncate max-w-[170px]"
             style={{ color: '#6f5e53' }}
             title={session.filename}
           >
@@ -376,32 +378,36 @@ export default function ChatInterface({ session }) {
 
         {/* ── Input Area — Inkwell ──────────────────────────────────────────── */}
         <div
-          className="flex-shrink-0 p-2.5 sm:p-4"
+          className="flex-shrink-0 p-2.5 sm:p-4 border-t-2"
           style={{
-            backgroundColor: '#c3a995',
-            boxShadow: '0 -4px 16px rgba(154,122,106,0.25)',
+            backgroundColor: 'rgba(242, 231, 222, 0.7)', // warm paper glass
+            backdropFilter: 'blur(10px)',
+            borderColor: '#ab947e',
+            boxShadow: '0 -6px 20px rgba(111, 94, 83, 0.1)',
           }}
         >
           <div
-            className="flex items-end gap-2.5 sm:gap-3 max-w-3xl mx-auto rounded-2xl p-2 sm:p-3"
+            className="flex items-end gap-2.5 sm:gap-3 max-w-3xl mx-auto p-2 sm:p-3 sketch-border-alt"
             style={{
-              backgroundColor: '#c3a995',
-              boxShadow: '6px 6px 14px #9a7a6a, -6px -6px 14px #d8c4b6',
+              backgroundColor: 'rgba(252, 247, 242, 0.85)',
+              borderColor: '#6f5e53',
+              boxShadow: '4px 4px 12px rgba(111, 94, 83, 0.12), -4px -4px 12px #ffffff',
             }}
           >
             {/* Inkwell icon */}
             <div
-              className="flex items-center justify-center w-9 h-9 rounded-xl flex-shrink-0 mb-0.5"
+              className="flex items-center justify-center w-9 h-9 sketch-border-sm flex-shrink-0 mb-0.5"
               style={{
-                backgroundColor: '#c3a995',
-                boxShadow: 'inset 2px 2px 5px #9a7a6a, inset -2px -2px 5px #d8c4b6',
+                backgroundColor: 'rgba(252, 247, 242, 0.9)',
+                borderColor: 'rgba(111, 94, 83, 0.4)',
+                boxShadow: 'inset 1.5px 1.5px 3px rgba(111, 94, 83, 0.1), inset -1.5px -1.5px 3px #ffffff',
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
-                  stroke="#8a7968"
-                  strokeWidth="1.5"
+                  stroke="#3e2826"
+                  strokeWidth="1.8"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -423,6 +429,9 @@ export default function ChatInterface({ session }) {
                 minHeight: '44px',
                 maxHeight: '120px',
                 padding: '10px 12px',
+                border: 'none',
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
               }}
               aria-label="Question input"
             />
@@ -432,25 +441,29 @@ export default function ChatInterface({ session }) {
               id="chat-send-btn"
               onClick={() => handleSubmit()}
               disabled={!input.trim() || isLoading}
-              className="flex items-center justify-center w-10 h-10 rounded-full flex-shrink-0 transition-all duration-150 mb-0.5"
+              className="flex items-center justify-center w-10 h-10 sketch-seal flex-shrink-0 transition-all duration-150 mb-0.5"
               style={{
-                backgroundColor: '#c3a995',
+                backgroundColor: !input.trim() || isLoading ? 'rgba(111, 94, 83, 0.15)' : 'rgba(139, 58, 58, 0.85)',
+                color: !input.trim() || isLoading ? '#8a7968' : '#fcfaf7',
+                borderColor: !input.trim() || isLoading ? 'rgba(111, 94, 83, 0.25)' : '#602222',
                 boxShadow:
                   !input.trim() || isLoading
-                    ? 'inset 2px 2px 4px #9a7a6a, inset -2px -2px 4px #d8c4b6'
-                    : '4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6',
-                border: 'none',
+                    ? 'inset 2px 2px 4px rgba(0,0,0,0.1)'
+                    : '3px 3px 6px rgba(0,0,0,0.25), inset -1.5px -1.5px 4px rgba(0,0,0,0.3), inset 1.5px 1.5px 4px rgba(255,255,255,0.25)',
                 cursor: !input.trim() || isLoading ? 'not-allowed' : 'pointer',
-                opacity: !input.trim() || isLoading ? 0.5 : 1,
+                borderStyle: 'solid',
+                borderWidth: '1.5px',
               }}
               onMouseEnter={(e) => {
                 if (!e.currentTarget.disabled) {
-                  e.currentTarget.style.boxShadow = 'inset 3px 3px 6px #9a7a6a, inset -3px -3px 6px #d8c4b6';
+                  e.currentTarget.style.backgroundColor = 'rgba(139, 58, 58, 0.95)';
+                  e.currentTarget.style.transform = 'scale(1.03)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (!e.currentTarget.disabled) {
-                  e.currentTarget.style.boxShadow = '4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6';
+                  e.currentTarget.style.backgroundColor = 'rgba(139, 58, 58, 0.85)';
+                  e.currentTarget.style.transform = 'none';
                 }
               }}
               aria-label="Send question"
@@ -463,15 +476,15 @@ export default function ChatInterface({ session }) {
                   fill="none"
                   style={{ animation: 'spin-slow 2s linear infinite' }}
                 >
-                  <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#6f5e53" strokeWidth="2" opacity="0.3" />
-                  <path d="M21 12a9 9 0 00-9-9" stroke="#6f5e53" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2.2" opacity="0.35" />
+                  <path d="M21 12a9 9 0 00-9-9" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
                 </svg>
               ) : (
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
-                    stroke="#593d3b"
-                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />

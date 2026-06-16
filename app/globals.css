@@ -7,25 +7,25 @@
 
 /* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
 :root {
-  /* Neumorphism palette */
-  --neu-base:      #c3a995;
-  --neu-light:     #d8c4b6;
-  --neu-lighter:   #e5d4cb;
-  --neu-dark:      #9a7a6a;
-  --neu-darker:    #7a5e52;
-  --espresso:      #593d3b;
+  /* Redefined colors for softer ledger feel */
+  --neu-base:      #f2e7de;
+  --neu-light:     #ffffff;
+  --neu-lighter:   #fcfaf7;
+  --neu-dark:      #dcd0c4;
+  --neu-darker:    #bcaea2;
+  --espresso:      #3e2826;
   --olive:         #8a7968;
   --mid-brown:     #6f5e53;
   --mid-tan:       #ab947e;
   --white:         #ffffff;
 
-  /* Neumorphic shadow tokens */
-  --shadow-raised:     8px  8px  16px #9a7a6a, -8px  -8px  16px #d8c4b6;
-  --shadow-raised-sm:  4px  4px   8px #9a7a6a, -4px  -4px   8px #d8c4b6;
-  --shadow-raised-xs:  2px  2px   4px #9a7a6a, -2px  -2px   4px #d8c4b6;
-  --shadow-inset:      inset 6px  6px  12px #9a7a6a, inset -6px  -6px  12px #d8c4b6;
-  --shadow-inset-sm:   inset 3px  3px   6px #9a7a6a, inset -3px  -3px   6px #d8c4b6;
-  --shadow-inset-xs:   inset 2px  2px   4px #9a7a6a, inset -2px  -2px   4px #d8c4b6;
+  /* Neumorphic shadow tokens tailored for lighter ledger-paper base */
+  --shadow-raised:     8px  8px  16px #dcd0c4, -8px  -8px  16px #ffffff;
+  --shadow-raised-sm:  4px  4px   8px #dcd0c4, -4px  -4px   8px #ffffff;
+  --shadow-raised-xs:  2px  2px   4px #dcd0c4, -2px  -2px   4px #ffffff;
+  --shadow-inset:      inset 6px  6px  12px #dcd0c4, inset -6px  -6px  12px #ffffff;
+  --shadow-inset-sm:   inset 3px  3px   6px #dcd0c4, inset -3px  -3px   6px #ffffff;
+  --shadow-inset-xs:   inset 2px  2px   4px #dcd0c4, inset -2px  -2px   4px #ffffff;
 
   /* Typography */
   --font-serif: 'Playfair Display', Georgia, serif;
@@ -48,11 +48,51 @@ html {
 }
 
 body {
-  background-color: var(--neu-base);
-  color: var(--espresso);
+  background-color: #f2e7de;
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(111, 94, 83, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(111, 94, 83, 0.045) 1px, transparent 1px);
+  color: #3e2826;
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* ─── Glassmorphism Utility Classes ─────────────────────────────────────────── */
+.glass-panel {
+  background: rgba(252, 247, 242, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.glass-panel-dark {
+  background: rgba(62, 40, 38, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Sketchmorphism Utility Classes (Wobbly organic hand-drawn shapes) ────── */
+.sketch-border {
+  border: 2px solid var(--espresso);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+
+.sketch-border-alt {
+  border: 2px solid var(--mid-brown);
+  border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+}
+
+.sketch-border-sm {
+  border: 1.5px solid var(--mid-brown);
+  border-radius: 120px 10px 100px 12px / 10px 110px 12px 100px;
+}
+
+.sketch-seal {
+  border: 2px solid var(--espresso);
+  border-radius: 50% 45% 52% 48% / 48% 52% 45% 50%;
 }
 
 /* ─── Scrollbar Styling ──────────────────────────────────────────────────────── */
