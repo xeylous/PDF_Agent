@@ -12,6 +12,7 @@
  *  └───────────────────────────┴────────────────────────────────────────────┘
  */
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import MessageItem from '@/components/MessageItem.js';
 
 const QUICK_PROMPTS = [
@@ -27,9 +28,24 @@ export default function ChatInterface({ session }) {
   const [isLoading, setIsLoading]   = useState(false);
   const [inputRows, setInputRows]   = useState(1);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [hasShownCelebration, setHasShownCelebration] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef       = useRef(null);
   const abortRef       = useRef(null);
+  const router         = useRouter();
+
+  // Restore celebration state from sessionStorage for the active document session
+  useEffect(() => {
+    if (session?.sessionId) {
+      try {
+        const shown = sessionStorage.getItem(`pdfScholar.celebrated.${session.sessionId}`);
+        if (shown) {
+          setHasShownCelebration(true);
+        }
+      } catch {}
+    }
+  }, [session]);
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -114,6 +130,14 @@ export default function ChatInterface({ session }) {
                     : m
                 )
               );
+              // Trigger celebration on first successful answer in this session
+              if (!hasShownCelebration) {
+                setShowCelebration(true);
+                setHasShownCelebration(true);
+                try {
+                  sessionStorage.setItem(`pdfScholar.celebrated.${session.sessionId}`, 'true');
+                } catch {}
+              }
             }
           } catch {
             // Skip malformed SSE lines
@@ -133,7 +157,7 @@ export default function ChatInterface({ session }) {
       setIsLoading(false);
       setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [input, isLoading, session.sessionId]);
+  }, [input, isLoading, session.sessionId, hasShownCelebration]);
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -498,24 +522,118 @@ export default function ChatInterface({ session }) {
             Press <kbd
               className="px-1.5 py-0.5 rounded text-xs mx-0.5"
               style={{
-                backgroundColor: '#c3a995',
-                boxShadow: '1px 1px 3px #9a7a6a, -1px -1px 3px #d8c4b6',
-                color: '#6f5e53',
+                backgroundColor: 'rgba(252, 247, 242, 0.9)',
+                boxShadow: '1px 1px 2px rgba(111, 94, 83, 0.1), -1px -1px 2px #ffffff',
+                border: '1px solid rgba(111, 94, 83, 0.25)',
+                color: 'var(--mid-brown)',
                 fontFamily: 'monospace',
               }}
             >Enter</kbd>
             to submit · <kbd
               className="px-1.5 py-0.5 rounded text-xs mx-0.5"
               style={{
-                backgroundColor: '#c3a995',
-                boxShadow: '1px 1px 3px #9a7a6a, -1px -1px 3px #d8c4b6',
-                color: '#6f5e53',
+                backgroundColor: 'rgba(252, 247, 242, 0.9)',
+                boxShadow: '1px 1px 2px rgba(111, 94, 83, 0.1), -1px -1px 2px #ffffff',
+                border: '1px solid rgba(111, 94, 83, 0.25)',
+                color: 'var(--mid-brown)',
                 fontFamily: 'monospace',
               }}
             >Shift+Enter</kbd> for new line
           </p>
         </div>
       </main>
+
+      {/* ── Celebration Toast ── */}
+      {showCelebration && (
+        <div
+          className="fixed bottom-24 right-4 sm:right-6 z-50 max-w-sm p-5 sketch-border animate-celebration-in"
+          style={{
+            backgroundColor: 'rgba(252, 247, 242, 0.95)',
+            borderColor: '#ab947e',
+            backdropFilter: 'blur(16px)',
+            boxShadow: '0 10px 30px rgba(62, 40, 38, 0.18), 3px 3px 8px rgba(0,0,0,0.1), inset -2px -2px 6px rgba(255,255,255,0.6)',
+          }}
+        >
+          <div className="flex items-start gap-3">
+            {/* Sparkles / seal icon */}
+            <div
+              className="flex items-center justify-center w-10 h-10 sketch-seal flex-shrink-0"
+              style={{
+                backgroundColor: 'rgba(139, 58, 58, 0.1)',
+                borderColor: 'rgba(139, 58, 58, 0.5)',
+                color: 'rgba(139, 58, 58, 0.85)',
+              }}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 3v4M12 17v4M5.93 5.93l2.83 2.83M15.24 15.24l2.83 2.83M3 12h4M17 12h4M5.93 18.07l2.83-2.83M15.24 8.76l2.83-2.83"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <circle cx="12" cy="12" r="3" fill="currentColor" />
+              </svg>
+            </div>
+            
+            <div className="flex-1">
+              <h3
+                className="text-sm font-bold uppercase tracking-wider mb-1"
+                style={{ color: 'var(--espresso)', fontFamily: "'Playfair Display', serif" }}
+              >
+                Inquiry Completed!
+              </h3>
+              <p className="text-xs mb-3 font-bold animate-pulse-glow px-2 py-0.5 rounded sketch-border-sm" style={{ color: 'rgba(139, 58, 58, 0.95)', display: 'inline-block' }}>
+                That&apos;s crazy how it happened! 🤯 ✨
+              </p>
+              <p className="text-[11px] mb-4 leading-relaxed font-semibold" style={{ color: 'var(--mid-brown)' }}>
+                The PDF chunking, Gemini embeddings, pgvector search, and Groq generation just worked seamlessly in a split second.
+              </p>
+              
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => router.push('/how-it-works')}
+                  className="px-3 py-1.5 sketch-border-sm text-xs font-bold transition-all duration-150"
+                  style={{
+                    backgroundColor: 'rgba(139, 58, 58, 0.85)',
+                    color: '#fcfaf7',
+                    borderColor: '#602222',
+                    boxShadow: '3px 3px 6px rgba(0,0,0,0.2), inset -1.5px -1.5px 4px rgba(0,0,0,0.3), inset 1.5px 1.5px 4px rgba(255,255,255,0.25)',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(139, 58, 58, 0.95)';
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(139, 58, 58, 0.85)';
+                    e.currentTarget.style.transform = 'none';
+                  }}
+                >
+                  See How It Works →
+                </button>
+                <button
+                  onClick={() => setShowCelebration(false)}
+                  className="px-2.5 py-1.5 sketch-border-sm text-xs font-bold transition-all duration-150"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: 'var(--mid-brown)',
+                    borderColor: 'rgba(111, 94, 83, 0.4)',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(111, 94, 83, 0.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }}
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -526,36 +644,37 @@ function EmptyState({ onPrompt, isLoading }) {
     <div className="flex flex-col items-center justify-center h-full py-16 px-4 text-center">
       {/* Large decorative icon */}
       <div
-        className="flex items-center justify-center w-24 h-24 rounded-3xl mb-8"
+        className="flex items-center justify-center w-20 h-20 sketch-border mb-8 animate-slide-up"
         style={{
-          backgroundColor: '#c3a995',
-          boxShadow: '10px 10px 20px #9a7a6a, -10px -10px 20px #d8c4b6',
+          backgroundColor: 'rgba(252, 247, 242, 0.85)',
+          borderColor: 'var(--espresso)',
+          boxShadow: '4px 4px 12px rgba(111, 94, 83, 0.12), -4px -4px 12px #ffffff',
         }}
       >
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
           <path
             d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z"
-            stroke="#6f5e53"
+            stroke="var(--mid-brown)"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          <path d="M8 10h8M8 14h5" stroke="#8a7968" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M8 10h8M8 14h5" stroke="var(--olive)" strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       </div>
 
       <h2
         className="text-2xl font-semibold mb-2"
-        style={{ fontFamily: "'Playfair Display', serif", color: '#3a2928' }}
+        style={{ fontFamily: "'Playfair Display', serif", color: 'var(--espresso)' }}
       >
         Begin your inquiry
       </h2>
-      <p className="text-sm max-w-sm mb-8" style={{ color: '#8a7968' }}>
+      <p className="text-sm max-w-sm mb-8" style={{ color: 'var(--olive)' }}>
         The document is indexed and ready. Ask anything — the scholar will find answers from your PDF.
       </p>
 
       {/* Suggestion pills */}
-      <div className="flex flex-wrap justify-center gap-2 max-w-md">
+      <div className="flex flex-wrap justify-center gap-2.5 max-w-md">
         {[
           'What is this document about?',
           'List the key conclusions',
@@ -565,16 +684,24 @@ function EmptyState({ onPrompt, isLoading }) {
             key={s}
             onClick={() => onPrompt(s)}
             disabled={isLoading}
-            className="px-4 py-2 rounded-xl text-sm transition-all duration-150 disabled:opacity-40"
+            className="px-4 py-2 sketch-border-sm text-sm transition-all duration-150 disabled:opacity-40 font-medium select-none"
             style={{
-              backgroundColor: '#c3a995',
-              boxShadow: '4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6',
-              color: '#593d3b',
-              border: 'none',
+              backgroundColor: 'rgba(252, 247, 242, 0.85)',
+              borderColor: 'var(--mid-brown)',
+              boxShadow: '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff',
+              color: 'var(--espresso)',
               cursor: isLoading ? 'not-allowed' : 'pointer',
             }}
-            onMouseEnter={(e) => !isLoading && (e.currentTarget.style.boxShadow = 'inset 3px 3px 6px #9a7a6a, inset -3px -3px 6px #d8c4b6')}
-            onMouseLeave={(e) => (e.currentTarget.style.boxShadow = '4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6')}
+            onMouseEnter={(e) => {
+              if (!isLoading) {
+                e.currentTarget.style.boxShadow = 'inset 1.5px 1.5px 3px rgba(111, 94, 83, 0.1), inset -1.5px -1.5px 3px #ffffff';
+                e.currentTarget.style.transform = 'translateY(1px)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff';
+              e.currentTarget.style.transform = 'none';
+            }}
           >
             {s}
           </button>

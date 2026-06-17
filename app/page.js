@@ -75,7 +75,7 @@ export default function HomePage() {
       style={{
         height: view === 'chat' ? '100vh' : 'auto',
         minHeight: '100vh',
-        backgroundColor: '#c3a995',
+        backgroundColor: 'transparent',
         overflow: view === 'chat' ? 'hidden' : 'auto',
       }}
     >
@@ -97,7 +97,7 @@ export default function HomePage() {
                 className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight"
                 style={{
                   fontFamily: "'Playfair Display', serif",
-                  color: '#3a2928',
+                  color: '#3e2826',
                 }}
               >
                 Interrogate any PDF
@@ -124,20 +124,20 @@ export default function HomePage() {
               ].map(({ name, sub }) => (
                 <div
                   key={name}
-                  className="flex flex-col items-center px-4 py-2.5 rounded-2xl"
+                  className="flex flex-col items-center px-4 py-2.5 sketch-border-sm"
                   style={{
-                    backgroundColor: '#c3a995',
-                    boxShadow: '4px 4px 8px #9a7a6a, -4px -4px 8px #d8c4b6',
-                    minWidth: '90px',
+                    backgroundColor: 'rgba(252, 247, 242, 0.72)',
+                    boxShadow: '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff',
+                    minWidth: '95px',
                   }}
                 >
                   <span
                     className="text-xs font-semibold"
-                    style={{ color: '#593d3b' }}
+                    style={{ color: 'var(--espresso)' }}
                   >
                     {name}
                   </span>
-                  <span className="text-xs" style={{ color: '#8a7968' }}>
+                  <span className="text-xs font-medium" style={{ color: 'var(--olive)' }}>
                     {sub}
                   </span>
                 </div>

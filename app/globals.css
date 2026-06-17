@@ -403,3 +403,64 @@ body {
 .animate-ink-pulse {
   animation: ink-pulse 1.5s ease-in-out infinite;
 }
+
+/* ─── RAG SVG & Celebration Animations ───────────────────────────────────────── */
+
+@keyframes celebration-in {
+  0% {
+    transform: translate3d(0, 100px, 0) scale(0.95);
+    opacity: 0;
+  }
+  70% {
+    transform: translate3d(0, -8px, 0) scale(1.01);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-celebration-in {
+  animation: celebration-in 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.15) forwards;
+}
+
+@keyframes dash-draw {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animate-dash-flow {
+  stroke-dasharray: 8;
+  animation: dash-draw 1.8s linear infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    border-color: var(--mid-brown);
+    box-shadow: 2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff;
+  }
+  50% {
+    border-color: rgba(139, 58, 58, 0.8);
+    box-shadow: 0 0 10px rgba(139, 58, 58, 0.25), inset 0 0 4px rgba(139, 58, 58, 0.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes float-sketch {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(0.4deg);
+  }
+}
+
+.animate-float-sketch {
+  animation: float-sketch 4.5s ease-in-out infinite;
+}
+

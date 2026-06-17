@@ -16,7 +16,7 @@ export const metadata = {
 export const viewport = {
   width:        'device-width',
   initialScale: 1,
-  themeColor:   '#c3a995',
+  themeColor:   '#f2e7de',
 };
 
 export default function RootLayout({ children }) {
@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen" style={{ backgroundColor: '#c3a995' }}>
+      <body className="min-h-screen">
         {children}
       </body>
     </html>
