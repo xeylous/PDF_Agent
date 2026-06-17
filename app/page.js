@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react';
 import Header         from '@/components/Header.js';
 import UploadZone     from '@/components/UploadZone.js';
 import ChatInterface  from '@/components/ChatInterface.js';
+import Footer         from '@/components/Footer.js';
 
 export default function HomePage() {
   const [view, setView]       = useState('upload'); // 'upload' | 'chat'
@@ -90,59 +91,62 @@ export default function HomePage() {
 
         {/* Upload View */}
         {view === 'upload' && (
-          <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-6 sm:gap-8 px-4 py-6 sm:py-12">
-            {/* Hero text */}
-            <div className="text-center max-w-xl px-2">
-              <h2
-                className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight"
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  color: '#3e2826',
-                }}
-              >
-                Interrogate any PDF
-                <br />
-                <span style={{ color: '#6f5e53' }}>with precision</span>
-              </h2>
-              <p className="text-sm sm:text-base" style={{ color: '#8a7968', lineHeight: 1.7 }}>
-                Upload a document and ask questions in plain language.
-                Semantic search surfaces the most relevant excerpts,
-                Groq&apos;s LLM synthesizes a precise answer.
-              </p>
-            </div>
-
-            {/* Upload Zone */}
-            <UploadZone onSuccess={handleUploadSuccess} />
-
-            {/* Tech stack */}
-            <div className="flex items-center gap-3 flex-wrap justify-center">
-              {[
-                { name: 'Groq LLM',    sub: 'llama-3.3-70b'       },
-                { name: 'Gemini',      sub: 'Embeddings'           },
-                { name: 'Neon DB',     sub: 'pgvector'             },
-                { name: 'Next.js 15',  sub: 'Streaming'            },
-              ].map(({ name, sub }) => (
-                <div
-                  key={name}
-                  className="flex flex-col items-center px-4 py-2.5 sketch-border-sm"
+          <div className="min-h-[calc(100vh-80px)] flex flex-col justify-between">
+            <div className="flex-1 flex flex-col items-center justify-center gap-6 sm:gap-8 px-4 py-6 sm:py-12">
+              {/* Hero text */}
+              <div className="text-center max-w-xl px-2">
+                <h2
+                  className="text-3xl sm:text-4xl font-semibold mb-3 leading-tight"
                   style={{
-                    backgroundColor: 'rgba(252, 247, 242, 0.72)',
-                    boxShadow: '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff',
-                    minWidth: '95px',
+                    fontFamily: "'Playfair Display', serif",
+                    color: '#3e2826',
                   }}
                 >
-                  <span
-                    className="text-xs font-semibold"
-                    style={{ color: 'var(--espresso)' }}
+                  Interrogate any PDF
+                  <br />
+                  <span style={{ color: '#6f5e53' }}>with precision</span>
+                </h2>
+                <p className="text-sm sm:text-base" style={{ color: '#8a7968', lineHeight: 1.7 }}>
+                  Upload a document and ask questions in plain language.
+                  Semantic search surfaces the most relevant excerpts,
+                  Groq&apos;s LLM synthesizes a precise answer.
+                </p>
+              </div>
+
+              {/* Upload Zone */}
+              <UploadZone onSuccess={handleUploadSuccess} />
+
+              {/* Tech stack */}
+              <div className="flex items-center gap-3 flex-wrap justify-center">
+                {[
+                  { name: 'Groq LLM',    sub: 'llama-3.3-70b'       },
+                  { name: 'Gemini',      sub: 'Embeddings'           },
+                  { name: 'Neon DB',     sub: 'pgvector'             },
+                  { name: 'Next.js 15',  sub: 'Streaming'            },
+                ].map(({ name, sub }) => (
+                  <div
+                    key={name}
+                    className="flex flex-col items-center px-4 py-2.5 sketch-border-sm"
+                    style={{
+                      backgroundColor: 'rgba(252, 247, 242, 0.72)',
+                      boxShadow: '2px 2px 5px rgba(111, 94, 83, 0.08), -2px -2px 5px #ffffff',
+                      minWidth: '95px',
+                    }}
                   >
-                    {name}
-                  </span>
-                  <span className="text-xs font-medium" style={{ color: 'var(--olive)' }}>
-                    {sub}
-                  </span>
-                </div>
-              ))}
+                    <span
+                      className="text-xs font-semibold"
+                      style={{ color: 'var(--espresso)' }}
+                    >
+                      {name}
+                    </span>
+                    <span className="text-xs font-medium" style={{ color: 'var(--olive)' }}>
+                      {sub}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
+            <Footer />
           </div>
         )}
 

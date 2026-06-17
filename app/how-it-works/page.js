@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Footer from '@/components/Footer.js';
 
 const STEPS = [
   {
@@ -490,6 +491,7 @@ export default function HowItWorksPage() {
         </div>
 
       </main>
+      <Footer />
     </div>
   );
 }
