@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 /**
  * components/Header.js
  * App header — dark espresso bar with app branding and optional action slot.
@@ -61,6 +63,39 @@ export default function Header({ session, onNewDocument }) {
 
       {/* ── Session Info + Action ─────────────────────────────────────────── */}
       <div className="flex items-center gap-2.5 sm:gap-4">
+        <Link
+          href="/how-it-works"
+          className="flex items-center gap-1.5 px-3 py-1.5 sketch-border-sm text-xs font-bold transition-all duration-200 hover:scale-[1.03]"
+          style={{
+            backgroundColor: 'rgba(252, 247, 242, 0.08)',
+            color: '#ab947e',
+            borderColor: 'rgba(171, 148, 126, 0.4)',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(252, 247, 242, 0.15)';
+            e.currentTarget.style.color = '#fcfaf7';
+            e.currentTarget.style.borderColor = 'rgba(171, 148, 126, 0.8)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(252, 247, 242, 0.08)';
+            e.currentTarget.style.color = '#ab947e';
+            e.currentTarget.style.borderColor = 'rgba(171, 148, 126, 0.4)';
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 16v-4m0-4h.01M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="hidden sm:inline">How It Works</span>
+          <span className="inline sm:hidden">How-To</span>
+        </Link>
+
         {session && (
           <div
             className="hidden sm:flex items-center gap-2 px-3 py-1.5 sketch-border-sm"
