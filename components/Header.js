@@ -167,24 +167,6 @@ export default function Header({ session, onNewDocument }) {
             <span className="inline sm:hidden">New</span>
           </button>
         )}
-
-        {/* Model badges */}
-        <div className="hidden md:flex items-center gap-1.5">
-          {['Groq', 'Gemini', 'Neon'].map((label) => (
-            <span
-              key={label}
-              className="text-xs px-2 py-0.5 rounded-md font-bold"
-              style={{
-                backgroundColor: 'rgba(242, 231, 222, 0.08)',
-                color: '#ab947e',
-                border: '1px solid rgba(171, 148, 126, 0.25)',
-                letterSpacing: '0.03em',
-              }}
-            >
-              {label}
-            </span>
-          ))}
-        </div>
       </div>
     </header>
   );
